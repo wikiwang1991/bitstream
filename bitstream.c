@@ -1,5 +1,4 @@
 #include "bitstream.h"
-#include <math.h>
 
 uint32_t bitstream_read_most32(bitstream_t *t, uint8_t bits)
 {
@@ -21,7 +20,7 @@ size_t bitstream_read_exp_golomb_ue_v(bitstream_t *t)
         b = bitstream_read_1(t);
     if (l) {
         u = bitstream_read_most8(t, l);
-        u = pow(2, l) - 1 + u;
+        u = (1 << l) - 1 + u;
         return u;
     } else return 0;
 }
