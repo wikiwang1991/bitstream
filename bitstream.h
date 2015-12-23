@@ -77,6 +77,13 @@ uint32_t bitstream_read_most32(bitstream_t *t, uint8_t bits);
 
 size_t bitstream_read_exp_golomb_ue_v(bitstream_t *t);
 
+static inline int bitstream_read_exp_golomb_se_v(bitstream_t *t)
+{
+    size_t u = bitstream_read_exp_golomb_ue_v(t);
+    if (u & 1) return u + 1 >> 1;
+    else return -(int)(u >> 1);
+}
+
 static inline void bitstream_set1(bitstream_t *t)
 {
     *t->data |= 1 << (7 - t->pos);
